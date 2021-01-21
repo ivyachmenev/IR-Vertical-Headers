@@ -1,0 +1,315 @@
+
+[[@if:#IS_APEX_4_2#]]
+
+/* ====================================== */
+/* ============== Apex 4.2 ============== */
+/* ====================================== */
+
+[[@if:#IS_NOT_LOADED#]]
+
+/* ======== Once For All Actions ======== */
+
+	#apexir_ACTIONSMENU, .dhtmlSubMenu, #apexir_columnsearch { z-index: 3000 }
+
+
+	/* fix background for multiline headers */
+
+	.apexir_WORKSHEET_DATA th {
+		background-color: #e7e7e7 ! important;
+		background-image: none ! important;
+	}
+
+
+	/* fix wrong height in firefox */
+
+	.apexir_WORKSHEET_DATA tr /*div, thead, table*/ {
+
+		vertical-align: top;
+	}
+
+
+	/* fix wrong height in opera
+	   content-box as well as defaults are not working properly in opera 12.17
+
+	   border-box height = content + padding + border-width */
+
+	.apexir_WORKSHEET_DATA th { 
+
+		box-sizing: border-box; 
+		webkit-box-sizing: border-box; 
+		-moz-box-sizing: border-box;
+	}
+
+
+	/* it is workaround for
+	   https://bugzilla.mozilla.org/show_bug.cgi?id=35168
+	   https://bugzilla.mozilla.org/show_bug.cgi?id=688556 */
+
+	table.apexir_WORKSHEET_DATA {
+
+		border-collapse: separate ! important ;
+	}
+	.apexir_WORKSHEET_DATA th.current { border-left-width: 0px ! important }
+
+
+
+	[[@if:#IS_NOT_IE#]]
+  
+	/* for z-index to work in FF propely it is necessary to set relative to all headers
+	   however it causes ie8 to eat borders */
+
+	.apexir_WORKSHEET_DATA th { position: relative ! important; } 
+
+	[[@end-if]]
+
+	.apexir_WORKSHEET_DATA td { 
+
+		box-sizing: border-box; 
+		webkit-box-sizing: border-box; 
+		-moz-box-sizing: border-box;
+	}
+	.apexir_WORKSHEET_DATA td.current { border-left-width: 0px ! important }
+  
+    /* it is workaround for: The clickable area for the last vertical header is sometimes extended outside of IR table. */
+    #apexir_DATA_PANEL {
+		
+		display: inline-block; 
+		overflow: hidden;
+	}
+[[@end-if]]
+
+/* ========= Once For Each Action ========= */
+
+[[@if:#IS_LT_IE_10#]]
+
+	/* Styles for ie9 and lower 
+	   this is workaround of fuzzy text in ie8,9 */
+  
+	[[#TH_DIV_LIST#]] { font-weight: normal ! important; }
+
+[[@end-if]]
+  
+	[[#TH_LIST#]] {
+
+		height: [[@plsql:#HEIGHT#+#BORDER_HEIGHT_SUMMMARY#+#BOTTOM_PADDING#+#TOP_PADDING#]]px; 
+		min-width: [[@plsql:#WIDTH#+#RIGHT_PADDING#+#LEFT_PADDING#+#BORDER_WIDTH_SUMMMARY#]]px ! important;
+
+		padding-bottom: [[#BOTTOM_PADDING#]]px ! important;
+		padding-right: [[#RIGHT_PADDING#]]px ! important;
+		padding-top: [[#TOP_PADDING#]]px ! important;
+		padding-left: 0px ! important;
+
+		position: relative ! important;
+	}
+  
+	[[#TD_LIST#]] {
+		padding-left: [[#LEFT_PADDING_FOR_TABLE_CELL#]]px ! important;
+		padding-right: [[#RIGHT_PADDING_FOR_TABLE_CELL#]]px ! important;
+	}
+
+	[[#TH_DIV_LIST#]] {
+
+		/*-moz-transform: rotate(90.0deg);*/  /*FF3.5+*/
+		/*-o-transform: rotate(90.0deg);*/  /*Opera 10.5*/
+		/*-webkit-transform: rotate(90.0deg);*/  /*Saf3.1+, Chrome*/
+		/*filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);*/  /*IE6,IE7*/
+		/*-ms-filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1);*/ /*IE8*/
+		/*left:-160px;*/
+
+		-moz-transform: rotate(270.0deg);  /*FF3.5+*/
+		-o-transform: rotate(270.0deg);  /*Opera 10.5*/
+		-webkit-transform: rotate(270.0deg);  /*Saf3.1+, Chrome*/
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  /*IE6,IE7*/
+		-ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /*IE8*/
+		transform: rotate(270deg);
+
+		box-sizing:content-box;
+	  
+		/* setting width/height to nonequal values shifts the text so this is the workaround */
+		height: [[@plsql:#HEIGHT#+#BOTTOM_PADDING#+#TOP_PADDING#-#LEFT_PADDING#]]px;
+		width: [[#HEIGHT#]]px; 
+
+		position: absolute ! important;
+		display: table-cell; 
+	  
+		vertical-align: top;
+
+		top: 0;
+	  
+		[[@if:#IS_HORIZONTAL_POSITION_LEFT#]]left: 0;[[@end-if]]
+		[[@if:#IS_HORIZONTAL_POSITION_CENTER#]]left: [[@plsql:to_char(trunc(#WIDTH#/2-#LINE_HEIGHT#*#LINES#/2,2),'fm99990D00','NLS_NUMERIC_CHARACTERS = ''.,''')]]px;[[@end-if]]
+		[[@if:#IS_HORIZONTAL_POSITION_RIGHT#]]left: [[@plsql:#WIDTH#-#LINE_HEIGHT#*#LINES#]]px;[[@end-if]]
+	  
+		[[@if:#IS_VERTICAL_POSITION_TOP#]]text-align: right ! important;[[@end-if]]
+		[[@if:#IS_VERTICAL_POSITION_MIDDLE#]]text-align: center ! important;[[@end-if]]
+		[[@if:#IS_VERTICAL_POSITION_BOTTOM#]]text-align: left ! important;[[@end-if]]
+
+		padding-right: [[#TOP_PADDING#]]px ! important;
+		padding-top: [[#LEFT_PADDING#]]px ! important;
+		padding-left: [[#BOTTOM_PADDING#]]px ! important;
+		padding-bottom: 0px ! important;
+
+		[[@if:#IS_LINE_HEIGHT_NOT_NULL#]]
+
+		line-height: [[#LINE_HEIGHT#]]px ! important;
+
+		[[@end-if]]
+	}
+
+[[@end-if]]
+
+
+
+
+
+
+[[@if:#IS_NOT_APEX_4_2#]]
+
+/* ====================================== */
+/* ============== Apex 5.0 ============== */
+/* ====================================== */
+
+[[@if:#IS_NOT_LOADED#]]
+
+	.a-IRR-headerLink:focus {
+
+		box-shadow: none ! important;
+	}
+
+	.a-IRR-colSearch, .a-Menu, .a-IRR-sortWidget { z-index: 3000 }
+
+
+	.a-IRR-table th {
+		background-color: #e7e7e7 ! important;
+		background-image: none ! important;
+	}
+
+	.a-IRR-table tr {
+
+		vertical-align: top;
+	}
+
+	.a-IRR-table th { 
+
+		box-sizing:border-box; 
+		webkit-box-sizing:border-box; 
+		-moz-box-sizing:border-box;
+	}
+
+	table.a-IRR-table {
+
+		border-collapse: separate ! important ;
+	}
+	.a-IRR-table th.current { border-left-width: 0px ! important }
+
+
+
+	[[@if:#IS_NOT_IE#]]
+
+	.a-IRR-table th { position: relative ! important; } 
+
+	[[@end-if]]
+
+	.a-IRR-table td { 
+
+		box-sizing: border-box; 
+		webkit-box-sizing: border-box; 
+		-moz-box-sizing: border-box;
+	}
+	.a-IRR-table td.current { border-left-width: 0px ! important }
+
+	.t-fht-tbody .a-IRR-header {
+	
+		border-bottom-width: 0px ! important;
+	}
+	
+	.t-fht-tbody {
+	
+		margin-top: -1px ! important;
+	}
+	
+	.a-IRR-tableContainer {
+		
+	  display: inline-block;
+	  overflow: hidden;
+	}
+[[@end-if]]
+
+
+	[[#TH_LIST#]],[[#CONTROLBREAK_TH_LIST#]],[[#PIVOT_ROW_TH_LIST#]] {
+
+		height: [[@plsql:#HEIGHT#+#BORDER_HEIGHT_SUMMMARY#+#BOTTOM_PADDING#+#TOP_PADDING#]]px; 
+		min-width: [[@plsql:#WIDTH#+#RIGHT_PADDING#+#LEFT_PADDING#+#BORDER_WIDTH_SUMMMARY#]]px ! important;
+
+		padding-bottom: [[#BOTTOM_PADDING#]]px ! important;
+		padding-right: [[#RIGHT_PADDING#]]px ! important;
+		padding-top: [[#TOP_PADDING#]]px ! important;
+		padding-left: 0px ! important;
+
+		position: relative ! important;
+	}
+	
+	[[#TD_LIST#]] {
+		padding-left: [[#LEFT_PADDING_FOR_TABLE_CELL#]]px ! important;
+		padding-right: [[#RIGHT_PADDING_FOR_TABLE_CELL#]]px ! important;
+	}
+
+	[[#TH_A_LIST#]],[[#CONTROLBREAK_TH_SPAN_LIST#]],[[#PIVOT_ROW_TH_A_LIST#]] {
+
+		-moz-transform: rotate(270.0deg); 
+		-o-transform: rotate(270.0deg); 
+		-webkit-transform: rotate(270.0deg); 
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  
+		-ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); 
+		transform: rotate(270deg);
+
+		box-sizing: border-box;
+		
+		height: [[@plsql:#HEIGHT#+#BOTTOM_PADDING#+#TOP_PADDING#]]px;
+		width: [[@plsql:#HEIGHT#+#BOTTOM_PADDING#+#TOP_PADDING#]]px; 
+
+		position: absolute ! important;
+		display: table-cell;
+	  
+		vertical-align: top;
+
+		top: 0;
+		
+		[[@if:#IS_HORIZONTAL_POSITION_LEFT#]]left: 0;[[@end-if]]
+		[[@if:#IS_HORIZONTAL_POSITION_CENTER#]]left: [[@plsql:to_char(trunc(#WIDTH#/2-#LINE_HEIGHT#*#LINES#/2,2),'fm99990D00','NLS_NUMERIC_CHARACTERS = ''.,''')]]px;[[@end-if]]
+		[[@if:#IS_HORIZONTAL_POSITION_RIGHT#]]left: [[@plsql:#WIDTH#-#LINE_HEIGHT#*#LINES#]]px;[[@end-if]]
+		
+		[[@if:#IS_VERTICAL_POSITION_TOP#]]text-align: right ! important;[[@end-if]]
+		[[@if:#IS_VERTICAL_POSITION_MIDDLE#]]text-align: center ! important;[[@end-if]]
+		[[@if:#IS_VERTICAL_POSITION_BOTTOM#]]text-align: left ! important;[[@end-if]]
+
+		padding-right: [[#TOP_PADDING#]]px ! important;
+		padding-top: [[#LEFT_PADDING#]]px ! important;
+		padding-left: [[#BOTTOM_PADDING#]]px ! important;
+		padding-bottom: 0px ! important;
+
+		[[@if:#IS_LINE_HEIGHT_NOT_NULL#]]
+
+		line-height: [[#LINE_HEIGHT#]]px ! important;
+
+		[[@end-if]]
+		
+		[[@if:#IS_LT_IE_10#]] font-weight: normal ! important; [[@end-if]]
+	}
+ 
+	[[#FIXED_TH_LIST#]] {
+		
+		min-width: [[@plsql:#WIDTH#+#RIGHT_PADDING#+#LEFT_PADDING#+#BORDER_WIDTH_SUMMMARY#]]px ! important;
+		
+		padding-right: [[#RIGHT_PADDING#]]px ! important;
+		padding-left: 0px ! important;
+	}
+	
+	[[#FIXED_TH_A_LIST#]] {
+
+		width: [[@plsql:#WIDTH#+#LEFT_PADDING#]]px ! important;
+
+		padding-left: [[#LEFT_PADDING#]]px ! important;
+		overflow: hidden;
+	}
+[[@end-if]]
